@@ -11,6 +11,9 @@ Baixe o docker e instale em sua maquina. [https://www.docker.com/get-started]
 Rode o comando abaixo no CMD (PowerShell/Bash) para rodar uma instancia local do "SQL Server":
 
 > docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Pass@word' -p 5433:1433 -d mcr.microsoft.com/mssql/server:2017-latest
+ 
+
+***Caso sua maquina não de suporte ao docker, baixe e instale o sqlexpress e atualize a connectionstring do projeto [https://www.microsoft.com/pt-br/sql-server/sql-server-downloads]***
 
 ## 3º Passo:
 
