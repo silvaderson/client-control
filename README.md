@@ -1,6 +1,6 @@
 # Teste prático para desenvolvedor de software
 
-Bem vindo ao teste prático. Siga os passoa abaixo e desenvolva o máximo que conseguir dentro do prazo.
+Bem vindo ao teste prático. Siga os passos abaixo e desenvolva o máximo que conseguir dentro do prazo.
 
 ## 1º Passo:
 
