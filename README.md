@@ -27,7 +27,7 @@ _________
 
 **Tarefa 1:** 
 
-No projeto "WebApi", crie uma nova rota GET "/clients?document=123456" para que seja possível a filtragem de clientes pelo número documento. Atente-se ao padrão já implementado em outras consultas já existentes. 
+No projeto "WebApi", crie uma nova rota GET "/clients?document=123456" para que seja possível a filtragem de clientes pelo número do documento. Atente-se ao padrão já implementado em outras consultas já existentes. 
 
 
 **Tarefa 2:** 
