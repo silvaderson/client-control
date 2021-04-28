@@ -21,6 +21,13 @@ Faça o "fork" deste repositório e clone ele em sua máquina para começar o de
 
 ## 4º Passo:
 
+Execute o migrations no seu banco de dados local
+*Obs.: O comando deve ser executado via CMD dentro ta pasta do projeto "Persistence".*
+
+> dotnet ef database update
+
+## 5º Passo:
+
 Hora de programar.
 
 _________
@@ -70,7 +77,7 @@ No projeto "WebApp", inclua o campo data de nascimento nas telas de Listagem, De
 
 ________ _
 
-## 5º Passo:
+## 6º Passo:
 
 Faça um "Pull Request" das alterações para o repositório atual. [https://docs.github.com/pt/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork]
 
