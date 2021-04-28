@@ -21,7 +21,8 @@ Faça o "fork" deste repositório e clone ele em sua máquina para começar o de
 
 ## 4º Passo:
 
-Execute o migrations no seu banco de dados local
+Execute o migrations no seu banco de dados local.
+
 *Obs.: O comando deve ser executado via CMD dentro ta pasta do projeto "Persistence".*
 
 > dotnet ef database update
