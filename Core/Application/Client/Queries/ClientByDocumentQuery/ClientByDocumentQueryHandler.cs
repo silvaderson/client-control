@@ -2,35 +2,35 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Client.Queries.AllClientsQuery
+namespace Application.Client.Queries.ClientByDocumentQuery
 {
-    public class AllClientsQueryHandler : IRequestHandler<AllClientsQueryRequest, IEnumerable<AllClientsQueryResponse>>
+    public class ClientByDocumentQueryHandler : IRequestHandler<ClientByDocumentQueryRequest, ClientByDocumentQueryResponse>
     {
         private readonly IClientControlContext _context;
 
-        public AllClientsQueryHandler(IClientControlContext context)
+        public ClientByDocumentQueryHandler(IClientControlContext context)
         {
             _context = context;
         }
 
-        public async Task<IEnumerable<AllClientsQueryResponse>> Handle(AllClientsQueryRequest request, CancellationToken cancellationToken)
+        public async Task<ClientByDocumentQueryResponse> Handle(ClientByDocumentQueryRequest request, CancellationToken cancellationToken)
         {
-            var clients = await _context.Clients
-                .Select(x => new AllClientsQueryResponse
+            var client = await _context.Clients
+                .Where(x=>x.DocumentNumber == request.DocumentNumber)
+                .Select(x => new ClientByDocumentQueryResponse
                 {
                     Id = x.Id,
                     CreatedAt = x.CreatedAt,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     Email = x.Email,
+                    BirthDate = x.BirthDate,
                     PhoneNumber = x.PhoneNumber,
                     DocumentNumber = x.DocumentNumber,
-                    BirthDate = x.BirthDate,
                     Address = new Models.AddressModel
                     {
                         PostalCode = x.Address.PostalCode,
@@ -42,12 +42,9 @@ namespace Application.Client.Queries.AllClientsQuery
                         State = x.Address.State
                     }
                 })
-                .OrderBy(x => x.FirstName)
-                .ThenBy(x => x.LastName)
+                .FirstOrDefaultAsync();
 
-                .ToListAsync();
-
-            return clients;
+            return client;
         }
     }
 }

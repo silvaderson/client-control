@@ -14,6 +14,7 @@ namespace WebApp.Services.DTOs
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string DocumentNumber { get; set; }
+        public string BirthDate { get; set; }
         public AddressDTO Address { get; set; }
     }
 }

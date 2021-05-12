@@ -1,4 +1,6 @@
 ﻿using Application.Client.Commands.CreateClient;
+using Application.Client.Queries.ClientByDocumentQuery;
+using Application.Client.Commands.EditClient;
 using Application.Client.Queries.AllClientsQuery;
 using Application.Client.Queries.ClientByIdQuery;
 using MediatR;
@@ -43,6 +45,23 @@ namespace WebApi.Controllers
         {
             var response = await _mediator.Send(new ClientByIdQueryRequest { Id = id });
 
+            return Ok(response);
+        }
+
+        [HttpGet("={document}")]
+        [ProducesResponseType(typeof(ClientByDocumentQueryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetByParameter([FromRoute] string document)
+        {
+            var response = await _mediator.Send(new ClientByDocumentQueryRequest { DocumentNumber = document });
+
+            return Ok(response);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Edit([FromBody]EditClientCommandRequest request)
+        {
+            var response = await _mediator.Send(request);
             return Ok(response);
         }
     }

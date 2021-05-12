@@ -36,6 +36,14 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetByDocument(string DocumentNumber)
+        {
+            var clients = await _clientControlService.GetClientByDocument(DocumentNumber);
+            var vm = clients;
+            return View(vm);
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -59,6 +67,29 @@ namespace WebApp.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+        [HttpPut]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var client = await _clientControlService.GetClientByIdAsync(id);
+            var vm = new ClientViewModel(client);
+            {
+                if (!ModelState.IsValid)
+                    return View(vm);
+
+                try
+                {
+                    await _clientControlService.CreateClientAsync(vm.ToDTO());
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", e.Message);
+                    return View(vm);
+
+                }
+
+                return RedirectToAction("Index");
+            }
         }
 
     }

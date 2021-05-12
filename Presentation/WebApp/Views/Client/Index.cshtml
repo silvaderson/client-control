@@ -6,10 +6,18 @@
 <h1>Clientes</h1>
 <div><a asp-controller="Client" asp-action="Register">+ Adicionar novo cliente</a></div>
 <br />
+<form action="Client" method="get" class="ml-3 mb-2">
+    <div class="row">
+        <input id="document" name="document" type="text" placeholder="Buscar por Documento"
+            class="form-control col-sm-3 mr-2" />
+        <input type="submit" value="Pesquisar" class="btn btn-primary col-sm-1" />
+    </div>
+</form>
 <div class="text-left">
     <table class="table">
         <thead>
             <tr>
+                <th></th>
                 <th></th>
                 <th>Nome</th>
                 <th>Telefone</th>
@@ -17,6 +25,7 @@
                 <th>Email</th>
                 <th>Cidade</th>
                 <th>Estado</th>
+                <th>Data de Nascimento</th>
             </tr>
         </thead>
         <tbody>
@@ -24,12 +33,14 @@
             {
                 <tr>
                     <td><a asp-controller="Client" asp-action="Detail" asp-route-id="@client.Id">Detalhes</a></td>
+                    <td><a asp-controller="Client" asp-action="Edit" asp-route-id="@client.Id">Editar</a></td>
                     <td>@client.FirstName @client.LastName</td>
                     <td>@client.PhoneNumber</td>
                     <td>@client.DocumentNumber</td>
                     <td>@client.Email</td>
                     <td>@client.Address?.City</td>
                     <td>@client.Address?.State</td>
+                    <td>@client.BirthDate</td>
                 </tr>
             }
         </tbody>

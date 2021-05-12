@@ -6,26 +6,26 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Client.Commands.CreateClient
+namespace Application.Client.Commands.EditClient
 {
-    public class CreateClientCommandHandler : IRequestHandler<CreateClientCommandRequest, Guid>
+    public class EditClientCommandHandler : IRequestHandler<EditClientCommandRequest, Guid>
     {
         private readonly IClientControlContext _context;
 
-        public CreateClientCommandHandler(IClientControlContext context)
+        public EditClientCommandHandler(IClientControlContext context)
         {
             _context = context;
         }
 
-        public async Task<Guid> Handle(CreateClientCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(EditClientCommandRequest request, CancellationToken cancellationToken)
         {
             var client = new Domain.Client(
                 request.FirstName,
                 request.LastName,
                 request.PhoneNumber,
                 request.Email,
-                request.BirthDate,
                 request.DocumentNumber,
+                request.BirthDate,
                 new Domain.Address(
                     request.Address.PostalCode,
                     request.Address.AddressLine,

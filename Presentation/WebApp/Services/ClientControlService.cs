@@ -57,6 +57,23 @@ namespace WebApp.Services
             }
         }
 
+        public async Task<ClientDTO> GetClientByDocument(string DocumentNumber)
+        {
+            var response = await _httpClient.GetAsync($"clients/={DocumentNumber}");
+
+            try
+            {
+                response.EnsureSuccessStatusCode();
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                return responseString.FromJson<ClientDTO>();
+            }
+            catch (HttpRequestException)
+            {
+                throw new Exception("An error occur while trying get document");
+            }
+        }
+
         public async Task<Guid> CreateClientAsync(ClientDTO dto)
         {
             var content = dto.ToJson();
