@@ -16,23 +16,23 @@ namespace Application.Client.Commands.CreateClient
         {
             _context = context;
         }
-
         public async Task<Guid> Handle(CreateClientCommandRequest request, CancellationToken cancellationToken)
         {
             var client = new Domain.Client(
-                request.FirstName,
-                request.LastName,
-                request.PhoneNumber,
-                request.Email,
-                request.DocumentNumber,
-                new Domain.Address(
-                    request.Address.PostalCode,
-                    request.Address.AddressLine,
-                    request.Address.Number,
-                    request.Address.Complement,
-                    request.Address.Neighborhood,
-                    request.Address.City,
-                    request.Address.State));
+                 request.FirstName,
+                 request.LastName,
+                 request.PhoneNumber,
+                 request.Email,
+                 request.DocumentNumber,
+                 request.BirthDate,
+                 new Domain.Address(
+                     request.Address.PostalCode,
+                     request.Address.AddressLine,
+                     request.Address.Number,
+                     request.Address.Complement,
+                     request.Address.Neighborhood,
+                     request.Address.City,
+                     request.Address.State));
 
             if (await _context.Clients.AnyAsync(x => x.DocumentNumber == client.DocumentNumber))
                 throw new BadRequestException("Document already exists");

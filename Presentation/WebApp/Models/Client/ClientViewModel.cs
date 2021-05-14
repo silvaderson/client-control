@@ -29,6 +29,9 @@ namespace WebApp.Models.Client
         [DisplayName("Documento")]
         [Required(ErrorMessage = "Campo obrigatório")]
         public string DocumentNumber { get; set; }
+        [DisplayName("Data de Nascimento")]
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public DateTime BirthDate { get; set; }
         public AddressViewModel Address { get; set; }
 
         public ClientViewModel()
@@ -45,18 +48,21 @@ namespace WebApp.Models.Client
             PhoneNumber = dto.PhoneNumber;
             Email = dto.Email;
             DocumentNumber = dto.DocumentNumber;
+            BirthDate = dto.BirthDate;
             Address = new AddressViewModel(dto.Address);
-    }
+        }
 
         public ClientDTO ToDTO()
         {
             return new ClientDTO
             {
+                Id = Id,
                 FirstName = FirstName,
                 LastName = LastName,
                 PhoneNumber = PhoneNumber,
                 Email = Email,
                 DocumentNumber = DocumentNumber,
+                BirthDate = BirthDate,
                 Address = Address.ToDTO()
             };
         }

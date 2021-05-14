@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebApp.Services.DTOs
 {
@@ -14,6 +11,7 @@ namespace WebApp.Services.DTOs
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string DocumentNumber { get; set; }
+        public DateTime BirthDate { get; set; }
         public AddressDTO Address { get; set; }
     }
 }

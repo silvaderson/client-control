@@ -6,7 +6,7 @@ namespace Domain
     {
         public Guid Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        public DateTime? ModifiedAt { get; private set; }
+        public DateTime? ModifiedAt { get; set; }
 
         public BaseEntity()
         {

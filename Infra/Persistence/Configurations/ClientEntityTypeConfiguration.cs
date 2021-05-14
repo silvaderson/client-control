@@ -15,6 +15,7 @@ namespace Persistence.Configurations
             builder.Property(b => b.PhoneNumber).IsRequired().HasColumnType("nvarchar(15)");
             builder.Property(b => b.DocumentNumber).IsRequired().HasColumnType("nvarchar(20)");
             builder.Property(b => b.Email).IsRequired().HasColumnType("nvarchar(255)");
+            builder.Property(b => b.BirthDate).IsRequired().HasColumnType("datetime2");
             builder.Property(b=>b.Address).HasColumnType("varchar(5000)").HasJsonValueConversion();
         }
     }

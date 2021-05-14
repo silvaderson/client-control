@@ -2,26 +2,27 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Client.Queries.ClientByIdQuery
+namespace Application.Client.Queries.ClientByDocumentQuery
 {
-    public class ClientByIdQueryHandler : IRequestHandler<ClientByIdQueryRequest, ClientByIdQueryResponse>
+    public class ClientByDocumentQueryHandler : IRequestHandler<ClientByDocumentQueryRequest, IEnumerable<ClientByDocumentQueryResponse>>
     {
         private readonly IClientControlContext _context;
 
-        public ClientByIdQueryHandler(IClientControlContext context)
+        public ClientByDocumentQueryHandler(IClientControlContext context)
         {
             _context = context;
         }
 
-        public async Task<ClientByIdQueryResponse> Handle(ClientByIdQueryRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ClientByDocumentQueryResponse>> Handle(ClientByDocumentQueryRequest request, CancellationToken cancellationToken)
         {
             var client = await _context.Clients
-                .Where(x=>x.Id == request.Id)
-                .Select(x => new ClientByIdQueryResponse
+                .Where(x => x.DocumentNumber == request.Document)
+                .Select(x => new ClientByDocumentQueryResponse
                 {
                     Id = x.Id,
                     CreatedAt = x.CreatedAt,
@@ -42,11 +43,9 @@ namespace Application.Client.Queries.ClientByIdQuery
                         State = x.Address.State
                     }
                 })
-                .FirstOrDefaultAsync();
+                .ToListAsync();
 
             return client;
         }
     }
 }
-
-

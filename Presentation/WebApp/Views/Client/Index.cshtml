@@ -1,20 +1,29 @@
 ﻿@model System.Collections.Generic.IEnumerable<WebApp.Models.Client.ClientViewModel>
-@{
-    ViewData["Title"] = "Clientes";
-}
+@{ ViewData["Title"] = "Clientes"; }
 
 <h1>Clientes</h1>
-<div><a asp-controller="Client" asp-action="Register">+ Adicionar novo cliente</a></div>
+<div><a asp-controller="Client" asp-action="Register" class="btn btn-success">+ Adicionar</a></div>
+
+<br />
+<form action="Client" method="get" class="form-inline float-right">
+    <div class="form-group mx-sm-3 mb-2">
+        <input type="text" id="document" name="document" placeholder="Documento" class="form-control" />
+    </div>
+    <button type="submit" id="search" class="btn btn-info mb-2 btn-sm">Buscar</button>
+</form>
+
 <br />
 <div class="text-left">
-    <table class="table">
+    <table class="table table-hover table-striped">
         <thead>
             <tr>
+                <th></th>
                 <th></th>
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Documento</th>
                 <th>Email</th>
+                <th>Nascimento</th>
                 <th>Cidade</th>
                 <th>Estado</th>
             </tr>
@@ -22,16 +31,17 @@
         <tbody>
             @foreach (var client in Model)
             {
-                <tr>
-                    <td><a asp-controller="Client" asp-action="Detail" asp-route-id="@client.Id">Detalhes</a></td>
-                    <td>@client.FirstName @client.LastName</td>
-                    <td>@client.PhoneNumber</td>
-                    <td>@client.DocumentNumber</td>
-                    <td>@client.Email</td>
-                    <td>@client.Address?.City</td>
-                    <td>@client.Address?.State</td>
-                </tr>
-            }
+            <tr>
+                <td><a asp-controller="Client" asp-action="Detail" asp-route-id="@client.Id" class="btn btn-primary btn-sm">Detalhes</a></td>
+                <td><a asp-controller="Client" asp-action="Edit" asp-route-id="@client.Id" class="btn btn-warning btn-sm">Editar</a></td>
+                <td>@client.FirstName @client.LastName</td>
+                <td>@client.PhoneNumber</td>
+                <td>@client.DocumentNumber</td>
+                <td>@client.Email</td>
+                <td>@client.BirthDate.ToShortDateString()</td>
+                <td>@client.Address?.City</td>
+                <td>@client.Address?.State</td>
+            </tr>}
         </tbody>
     </table>
 </div>

@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Application.Client.Commands.CreateClient
+namespace Application.Client.Commands.UpdateClient
 {
-    public class CreateClientCommandValidator : AbstractValidator<CreateClientCommandRequest>
+    public class UpdateClientCommandValidator : AbstractValidator<UpdateClientCommandRequest>
     {
-        public CreateClientCommandValidator()
+        public UpdateClientCommandValidator()
         {
             RuleFor(x => x.FirstName)
                .NotEmpty()
@@ -27,8 +27,8 @@ namespace Application.Client.Commands.CreateClient
                .WithMessage((obj, propertyValue) => $"DocumentNumber obrigatório");
 
             RuleFor(x => x.BirthDate)
-             .NotEmpty()
-             .WithMessage((obj, propertyValue) => $"BirthDate obrigatório");
+              .NotEmpty()
+              .WithMessage((obj, propertyValue) => $"BirthDate obrigatório");
 
             RuleFor(x => x.Address)
                 .NotNull()

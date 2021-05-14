@@ -20,9 +20,11 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string document)
         {
-            var clients = await _clientControlService.ListAllClientsAsync();
+            var clients = !string.IsNullOrEmpty(document) ? await _clientControlService.GetClientByDocumentAsync(document) 
+                                                          : await _clientControlService.ListAllClientsAsync();
+            
             var vm = clients.Select(x => new ClientViewModel(x));
             return View(vm);
         }
@@ -35,6 +37,34 @@ namespace WebApp.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var client = await _clientControlService.GetClientByIdAsync(id);
+            var vm = new ClientViewModel(client);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ClientViewModel vm)
+        {
+            if (!ModelState.IsValid)
+                return View(vm);
+
+            try
+            {
+                await _clientControlService.UpdateClientAsync(vm.ToDTO());
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(vm);
+
+            }
+
+            return RedirectToAction("Index");
+        }
+        
         [HttpGet]
         public IActionResult Register()
         {
