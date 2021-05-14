@@ -25,6 +25,7 @@ namespace Application.Client.Commands.CreateClient
                 request.PhoneNumber,
                 request.Email,
                 request.DocumentNumber,
+                request.BirthDate.Value,
                 new Domain.Address(
                     request.Address.PostalCode,
                     request.Address.AddressLine,

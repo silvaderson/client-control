@@ -1,5 +1,7 @@
 ﻿using Application.Client.Commands.CreateClient;
+using Application.Client.Commands.UpdateClient;
 using Application.Client.Queries.AllClientsQuery;
+using Application.Client.Queries.ClientByDocumentQuery;
 using Application.Client.Queries.ClientByIdQuery;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -9,7 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace WebApi.Controllers
-{ 
+{
     [ApiController]
     [Route("clients")]
     public class ClientController : ControllerBase
@@ -45,5 +47,31 @@ namespace WebApi.Controllers
 
             return Ok(response);
         }
+        
+        //Coloquei client antes do DocumentNumber pois, estava retornando erro de Rota ambigua
+
+        [HttpGet("client/{documentNumber}")]
+        [ProducesResponseType(typeof(ClientByDocumentQueryRequest), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetByDocument([FromRoute] string documentNumber)
+        {
+            var response = await _mediator.Send(new ClientByDocumentQueryRequest { Document = documentNumber });
+
+            return Ok(response);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Update([FromBody] UpdateClientCommandRequest request ,[FromRoute] Guid id)
+        {
+            request.Id = id;
+            var response = await _mediator.Send(request);
+
+            return Ok(response);
+        }
+
+
+
+
+
     }
 }

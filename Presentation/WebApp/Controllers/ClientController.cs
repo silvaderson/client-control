@@ -7,7 +7,7 @@ using WebApp.Models.Client;
 using WebApp.Services;
 
 namespace WebApp.Controllers
-{
+{ 
     public class ClientController : Controller
     {
         private readonly ILogger<ClientController> _logger;
@@ -36,6 +36,14 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetDocument(string documentNumber)
+        {
+            var client = await _clientControlService.GetClientByDocumentNumberAsync(documentNumber);
+            var vm = new ClientViewModel(client);
+            return View(vm);
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -50,6 +58,26 @@ namespace WebApp.Controllers
             try
             {
                 await _clientControlService.CreateClientAsync(vm.ToDTO());
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(vm);
+
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(ClientViewModel vm, Guid id)
+        {
+            if (!ModelState.IsValid)
+                return View(vm);
+
+            try
+            {
+                await _clientControlService.UpdateClientAsync(vm.ToDTO(),id);
             }
             catch (Exception e)
             {

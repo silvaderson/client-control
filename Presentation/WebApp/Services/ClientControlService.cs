@@ -57,6 +57,23 @@ namespace WebApp.Services
             }
         }
 
+        public async Task<ClientDTO> GetClientByDocumentNumberAsync(string documentNumber)
+        {
+            var response = await _httpClient.GetAsync($"7{documentNumber}");
+
+            try
+            {
+                response.EnsureSuccessStatusCode();
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                return responseString.FromJson<ClientDTO>();
+            }
+            catch (HttpRequestException)
+            {
+                throw new Exception("An error occur while trying get clients");
+            }
+        }
+
         public async Task<Guid> CreateClientAsync(ClientDTO dto)
         {
             var content = dto.ToJson();
@@ -68,6 +85,24 @@ namespace WebApp.Services
                 response.EnsureSuccessStatusCode();
                 var responseString = await response.Content.ReadAsStringAsync();
                 return responseString.FromJson<Guid>();
+            }
+            catch (HttpRequestException hre)
+            {
+                throw new HttpRequestException(await GetWebExceptionAsync(hre, response, "Ocorreu um erro ao processar a solicitação"));
+            }
+        }
+
+        public async Task<bool> UpdateClientAsync(ClientDTO dto, Guid id)
+        {
+            var content = dto.ToJson();
+            var stringContent = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync($"clients/{id}", stringContent);
+            try
+            {
+                response.EnsureSuccessStatusCode();
+                var responseString = await response.Content.ReadAsStringAsync();
+                return responseString.FromJson<bool>();
             }
             catch (HttpRequestException hre)
             {

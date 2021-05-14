@@ -1,4 +1,6 @@
-﻿namespace Application.Client.Models
+﻿using System;
+
+namespace Application.Client.Models
 {
     public class ClientModel
     {
@@ -8,5 +10,6 @@
         public string Email { get; set; }
         public string DocumentNumber { get; set; }
         public AddressModel Address { get; set; }
+        public DateTime? BirthDate { get; set; }
     }
 }

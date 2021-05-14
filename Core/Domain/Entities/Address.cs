@@ -20,5 +20,16 @@
             City = city;
             State = state;
         }
+
+        public void UpdateAddress(string postalCode, string addressLine, string number, string complement, string neighborhood, string city, string state)
+        {
+            PostalCode = postalCode;
+            AddressLine = addressLine;
+            Number = number;
+            Complement = complement;
+            Neighborhood = neighborhood;
+            City = city;
+            State = state;
+        }
     }
 }

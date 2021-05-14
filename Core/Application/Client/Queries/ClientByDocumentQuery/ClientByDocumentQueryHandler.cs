@@ -4,24 +4,26 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Client.Queries.AllClientsQuery
+namespace Application.Client.Queries.ClientByDocumentQuery
 {
-    public class AllClientsQueryHandler : IRequestHandler<AllClientsQueryRequest, IEnumerable<AllClientsQueryResponse>>
+    public class ClientByIdQueryHandler : IRequestHandler<ClientByDocumentQueryRequest, ClientByDocumentQueryResponse>
     {
         private readonly IClientControlContext _context;
 
-        public AllClientsQueryHandler(IClientControlContext context)
+        public ClientByIdQueryHandler(IClientControlContext context)
         {
             _context = context;
         }
 
-        public async Task<IEnumerable<AllClientsQueryResponse>> Handle(AllClientsQueryRequest request, CancellationToken cancellationToken)
+        public async Task<ClientByDocumentQueryResponse> Handle(ClientByDocumentQueryRequest request, CancellationToken cancellationToken)
         {
-            var clients = await _context.Clients
-                .Select(x => new AllClientsQueryResponse
+            var client = await _context.Clients
+                .Where(x => x.DocumentNumber == request.Document)
+                .Select(x => new ClientByDocumentQueryResponse
                 {
                     Id = x.Id,
                     CreatedAt = x.CreatedAt,
@@ -42,12 +44,10 @@ namespace Application.Client.Queries.AllClientsQuery
                         State = x.Address.State
                     }
                 })
-                .OrderBy(x => x.FirstName)
-                .ThenBy(x => x.LastName)
+                .FirstOrDefaultAsync();
 
-                .ToListAsync();
-
-            return clients;
+            return client;
         }
     }
 }
+
