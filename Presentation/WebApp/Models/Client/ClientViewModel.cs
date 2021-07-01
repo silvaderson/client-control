@@ -31,7 +31,7 @@ namespace WebApp.Models.Client
         public string DocumentNumber { get; set; }
         public AddressViewModel Address { get; set; }
 
-        public ClientViewModel()
+        public ClientViewModel(Microsoft.Extensions.Logging.ILogger<ClientViewModel> documentNumber)
         {
 
         }

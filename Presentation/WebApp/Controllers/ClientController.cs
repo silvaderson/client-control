@@ -12,6 +12,7 @@ namespace WebApp.Controllers
     {
         private readonly ILogger<ClientController> _logger;
         private readonly ClientControlService _clientControlService;
+        private readonly ILogger<ClientViewModel> DocumentNumber;
 
         public ClientController(ILogger<ClientController> logger, ClientControlService clientControlService)
         {
@@ -60,6 +61,41 @@ namespace WebApp.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> IdDoc(Guid iddoc)
+        {
+            var client = await _clientControlService.GetClientByIdAsync(iddoc);
+            var vm = new ClientViewModel(DocumentNumber);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdtClient(ClientViewModel vm)
+        {
+            if (!ModelState.IsValid)
+                return View(vm);
+
+            try
+            {
+                await _clientControlService.CreateClientAsync(vm.ToDTO());
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(vm);
+
+            }
+
+            return RedirectToAction("HttpPost({/ clients /{id}}");
+        }
+
+
+
+
+
+
+
+
 
     }
 }

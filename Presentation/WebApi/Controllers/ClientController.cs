@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace WebApi.Controllers
 {
     [ApiController]
@@ -45,5 +46,39 @@ namespace WebApi.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("{/clients?document=123456}")]
+        [ProducesResponseType(typeof(ClientByIdQueryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetByDoc([FromRoute] Guid document)
+        {
+            var response = await _mediator.Send(new AllClientsQueryResponse { DocumentNumber = document.ToString()});
+
+            return Ok(response);
+        }
+
+        [HttpPost ("{/ clients /{id}}")]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdtClient([FromBody] CreateClientCommandRequest request)
+        {
+            var response = await _mediator.Send(request);
+            return Ok(response);
+        }
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+

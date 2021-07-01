@@ -9,7 +9,9 @@
         public string DocumentNumber { get; private set; }
         public Address Address { get; private set; }
 
-        public Client(string firstName, string lastName, string phoneNumber, string email, string documentNumber, Address address)
+        public string BirthDate { get; private set; }
+
+        public Client(string firstName, string lastName, string phoneNumber, string email, string documentNumber, Address address,string birthDate)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -17,6 +19,7 @@
             Email = email;
             DocumentNumber = documentNumber;
             Address = address;
+            BirthDate = birthDate;
         }
     }
 }
